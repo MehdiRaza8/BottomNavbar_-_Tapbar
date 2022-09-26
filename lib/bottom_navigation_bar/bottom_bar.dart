@@ -1,3 +1,4 @@
+import 'package:bottomnavigateandtapbar/Tapbar/tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,12 +15,14 @@ class _BottomBarState extends State<BottomBar>
   late TabController _tabController;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   void dispose() {
+    // TODO: implement dispose
     super.dispose();
     _tabController.dispose();
   }
@@ -27,30 +30,44 @@ class _BottomBarState extends State<BottomBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar'),
-        centerTitle: true,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting, // Shifting
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.call),
-            label: 'Calls',
-            backgroundColor: Colors.blue,
+      body: SafeArea(
+          child: TabBarView(
+        controller: _tabController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
+          ToptaBar(),
+          Center(
+            child: Icon(
+              Icons.emoji_emotions,
+              size: 100,
+              color: Colors.black,
+            ),
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
-              backgroundColor: Colors.red),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chats',
-            backgroundColor: Colors.green,
+          Center(
+            child: Icon(
+              Icons.emoji_events,
+              size: 100,
+              color: Colors.black,
+            ),
           ),
         ],
+      )),
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: TabBar(
+            unselectedLabelColor: Colors.amber,
+            controller: _tabController,
+            tabs: const [
+              Tab(
+                icon: Icon(Icons.home),
+              ),
+              Tab(
+                icon: Icon(Icons.place_rounded),
+              ),
+              Tab(
+                icon: Icon(Icons.stacked_bar_chart),
+              ),
+            ]),
       ),
     );
   }
